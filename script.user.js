@@ -2,7 +2,7 @@
 // @name        Bitcointalk thread filter
 // @namespace   kazuki.t
 // @include     https://bitcointalk.org/index.php?*
-// @version     1.01
+// @version     1.02
 // @grant    GM_getValue
 // @grant    GM_setValue
 // @grant    GM_deleteValue
@@ -46,7 +46,7 @@ for(let span in allSpan){
 
 // Add filter&delete feature
 document.getElementById("alldel").onclick = function(){
-    const fltText = document.getElementById("flt").value;
+    const fltText = document.getElementById("flt").value.toLowerCase();
 
     if(fltText.length < 3){
         alert("Too short! Filter strings must longer than 3.");
@@ -56,18 +56,18 @@ document.getElementById("alldel").onclick = function(){
     for(let i=0;i<nodesNum;i++){
         const btni = document.getElementById("btn"+i);
         const url = btni.title;
-        if(GM_getValue(url) == null && btni.parentNode.innerHTML.indexOf(fltText) >= 0){
+        if(GM_getValue(url) == null && btni.parentNode.innerHTML.toLowerCase().indexOf(fltText) >= 0){
             hideThread(url, btni.parentNode);
         }
     }
 };
 document.getElementById("flt").onchange = function(){
-    const fltText = document.getElementById("flt").value;
+    const fltText = document.getElementById("flt").value.toLowerCase();
     for(let i=0;i<nodesNum;i++){
         const btni = document.getElementById("btn"+i);
         const url = btni.title;
         if(GM_getValue(url) == null){
-            if(fltText.length < 3 || btni.parentNode.innerHTML.indexOf(fltText) >= 0){
+            if(fltText.length < 3 || btni.parentNode.innerHTML.toLowerCase().indexOf(fltText) >= 0){
                 specifyParentTrNodeState(btni.parentNode, "");
             }else{
                 specifyParentTrNodeState(btni.parentNode, "none");

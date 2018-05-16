@@ -8,3 +8,6 @@ The purpose is not ignoring useful threads but sometimes ICO ANN threads are rea
 - RECOVERY: Recover deleted thread to show
 - [TEXTBOX]: Filter by entered strings
 - DeleteThem: Remove filtered threads. For instance typing "Airdrop" and Click this button, then all threads with named "Airdrop" will be removed in that page.
+
+## Node
+This script.user.js is based on tempermonkey.
