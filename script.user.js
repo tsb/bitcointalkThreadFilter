@@ -2,7 +2,7 @@
 // @name        Bitcointalk thread filter
 // @namespace   kazuki.t
 // @include     https://bitcointalk.org/index.php?*
-// @version     1.02
+// @version     1.03
 // @grant    GM_getValue
 // @grant    GM_setValue
 // @grant    GM_deleteValue
@@ -47,9 +47,8 @@ for(let span in allSpan){
 // Add filter&delete feature
 document.getElementById("alldel").onclick = function(){
     const fltText = document.getElementById("flt").value.toLowerCase();
-
     if(fltText.length < 3){
-        alert("Too short! Filter strings must longer than 3.");
+        alert("Too short! Filter strings must be longer than 2.");
         return;
     }
 
@@ -60,20 +59,13 @@ document.getElementById("alldel").onclick = function(){
             hideThread(url, btni.parentNode);
         }
     }
+
+    // Back to expected state(showing everything without removed threds)
+    document.getElementById("flt").value = "";
+    filterThreads();
 };
 document.getElementById("flt").onchange = function(){
-    const fltText = document.getElementById("flt").value.toLowerCase();
-    for(let i=0;i<nodesNum;i++){
-        const btni = document.getElementById("btn"+i);
-        const url = btni.title;
-        if(GM_getValue(url) == null){
-            if(fltText.length < 3 || btni.parentNode.innerHTML.toLowerCase().indexOf(fltText) >= 0){
-                specifyParentTrNodeState(btni.parentNode, "");
-            }else{
-                specifyParentTrNodeState(btni.parentNode, "none");
-            }
-        }
-    }
+    filterThreads();
 };
 
 // Add recovery feature(coming back deleted threads in showing page)
@@ -99,3 +91,17 @@ function hideThread(url, node){
     specifyParentTrNodeState(node, "none");
 }
 
+function filterThreads(){
+    const fltText = document.getElementById("flt").value.toLowerCase();
+    for(let i=0;i<nodesNum;i++){
+        const btni = document.getElementById("btn"+i);
+        const url = btni.title;
+        if(GM_getValue(url) == null){
+            if(fltText.length < 3 || btni.parentNode.innerHTML.toLowerCase().indexOf(fltText) >= 0){
+                specifyParentTrNodeState(btni.parentNode, "");
+            }else{
+                specifyParentTrNodeState(btni.parentNode, "none");
+            }
+        }
+    }
+}
